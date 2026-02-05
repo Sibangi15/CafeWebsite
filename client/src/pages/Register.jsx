@@ -41,7 +41,7 @@ const Register = (props) => {
         setCredentials({ ...credentials, [e.target.name]: e.target.value })
     }
     return (
-        <div className="min-h-screen flex items-center justify-center bg-[url('/1.jpg')] bg-cover bg-center px-4">
+        <div className="min-h-screen pt-20 flex items-center justify-center bg-[url('/1.jpg')] bg-cover bg-center px-4">
             <div className="absolute inset-0 bg-black/60"></div>
 
             <div className="relative w-full max-w-md bg-white/90 backdrop-blur-md rounded-2xl shadow-xl p-8">

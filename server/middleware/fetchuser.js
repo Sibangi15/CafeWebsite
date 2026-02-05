@@ -1,15 +1,23 @@
-var jwt = require('jsonwebtoken');
+const jwt = require('jsonwebtoken');
+
 const JWT_SECRET = 'heythere';
 
-const fetchuser = (req, res, next) => {
+function fetchuser(req, res, next) {
+    // Get token from header
     const token = req.header('auth-token');
-    if (!token) { res.status(401).send({ error: 'Please authenticate using a valid token' }) }
+
+    if (!token) {
+        return res.status(401).json({ error: "No token provided" });
+    }
+
     try {
         const data = jwt.verify(token, JWT_SECRET);
-        req.user = data.user;
-        next();
+        req.user = data.user;   // { id: ... }
+        next();                
     } catch (error) {
-        res.status(401).send({ error: 'Please authenticate using a valid token' });
+        return res.status(401).json({ error: "Invalid token" });
     }
 }
+
 module.exports = fetchuser;
+

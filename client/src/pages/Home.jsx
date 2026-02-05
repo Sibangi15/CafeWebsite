@@ -11,19 +11,15 @@ const Home = () => {
                     <p className="text-lg md:text-xl mb-6">
                         Indulge in the Sweet Symphony of Our Irresistible Pastries and Cakes
                     </p>
-                    <button className="px-6 py-3 border border-white rounded-full hover:bg-white hover:text-black transition">
-                        <button
-                            onClick={() => {
-                                document.getElementById("gallery")?.scrollIntoView({
-                                    behavior: "smooth",
-                                    block: "start"
-                                });
-                            }}
-                            className="cursor-pointer"
-                        >
-                            Tempt Me
-                        </button>
-
+                    <button className="px-6 py-3 border border-white rounded-full hover:bg-white hover:text-black transition cursor"
+                        onClick={() => {
+                            document.getElementById("gallery")?.scrollIntoView({
+                                behavior: "smooth",
+                                block: "start"
+                            });
+                        }}
+                    >
+                        Tempt Me
                     </button>
                 </div>
             </div>

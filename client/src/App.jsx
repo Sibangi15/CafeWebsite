@@ -5,13 +5,12 @@ import {
   Route
 } from "react-router-dom";
 import Navbar from './components/Navbar';
-// import NoteState from './context/notes/NoteState';
-// import Alert from './components/Alert';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import { useState } from 'react';
 import LandingPage from './pages/LandingPage';
 import Menu from './pages/Menu';
+import Cart from './pages/Cart';
 
 function App() {
   const [alert, setAlert] = useState(null);
@@ -26,21 +25,24 @@ function App() {
   }
   return (
     <div>
-      {/* <NoteState> */}
       <Router>
         <Navbar />
-        <Routes><Route path="/" element={<LandingPage />} />
+        <Routes>
+          <Route path="/" element={<LandingPage />} />
           <Route path="/login" element={<Login showAlert={showAlert} />} />
           <Route path="/register" element={<Register showAlert={showAlert} />} />
           <Route path="/menu" element={<Menu />} />
+          <Route path="/orders" element={<Cart />} />
         </Routes>
       </Router>
-      {/* </NoteState>  */}
     </div>
   );
 }
 
 export default App;
+
+
+
 
 
 

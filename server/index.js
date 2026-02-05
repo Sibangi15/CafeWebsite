@@ -18,5 +18,5 @@ app.use('/api/menu', require('./routes/menu'))
 app.use('/api/order', require('./routes/order'))
 
 app.listen(port, () => {
-  console.log(`iNotebook app listening on port ${port}`)
+  console.log(`Cafe app listening on port ${port}`)
 })

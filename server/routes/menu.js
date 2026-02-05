@@ -1,95 +1,114 @@
 const express = require('express');
 const router = express.Router();
-var fetchuser = require('../middleware/fetchuser');
+const fetchuser = require('../middleware/fetchuser');
 const Menu = require('../modules/MenuItem');
 const { body, validationResult } = require('express-validator');
 
-//ROUTE 1: get Menu (user)
-router.get('/fetchmenu', fetchuser, async (req, res) => {
+// ROUTE 1: Get Menu (PUBLIC)
+router.get('/', async (req, res) => {
     try {
         const menu = await Menu.find();
-        res.json(menu)
+        res.json(menu);
     } catch (error) {
         console.error(error.message);
         res.status(500).send("Internal server error");
     }
-})
+});
 
-//ROUTE 2: add new Menu (admin)
-router.post('/addmenu', fetchuser, [
-    body('name', 'Enter valid name').isLength({ min: 3 }),
-    body('description', 'Description must be atleast 5 characters').isLength({ min: 5 }),
-    body('price', 'Add the price here').isNumeric(),
-    body('category', 'which category is it').isLength({ min: 3 }),
-    body('image', 'URL of the image').isURL()
-], async (req, res) => {
+// ROUTE 2: Add Menu Item (ADMIN)
+router.post('/', fetchuser, [
+        body('name', 'Enter valid name').isLength({ min: 3 }),
+        body('description', 'Description must be at least 5 characters').isLength({ min: 5 }),
+        body('price', 'Price must be a number').isNumeric(),
+        body('category', 'Category is required').isLength({ min: 3 }),
+        body('image', 'Image must be a valid URL').isURL()
+    ],
+    async (req, res) => {
+        try {
+            // if (req.user.role !== 'admin') {
+            //     return res.status(403).json({ error: "Admin access required" });
+            // }
+
+            const errors = validationResult(req);
+            if (!errors.isEmpty()) {
+                return res.status(400).json({ errors: errors.array() });
+            }
+
+            const { name, description, price, category, image } = req.body;
+
+            const menu = new Menu({
+                name,
+                description,
+                price,
+                category,
+                image
+            });
+
+            const savedMenu = await menu.save();
+            res.json(savedMenu);
+
+        } catch (error) {
+            console.error(error.message);
+            res.status(500).send("Internal server error");
+        }
+    }
+);
+
+// ROUTE 3: Update Menu (ADMIN)
+router.put('/:id', fetchuser, async (req, res) => {
     try {
         if (req.user.role !== 'admin') {
-            return res.status(403).send("Access denied");
+            return res.status(403).json({ error: "Admin access required" });
         }
+
         const { name, description, price, category, image } = req.body;
 
-        const errors = validationResult(req);
-        if (!errors.isEmpty()) { return res.status(400).json({ errors: errors.array() }); }
-
-        const menu = new Menu({ name, description, price, category, image, user: req.user.id })
-        //if (menu) { return res.status(400).json({ error: "Sorry this menu already exists" }) }
-        const saveMenu = await menu.save();
-        res.json(saveMenu)
-    } catch (error) {
-        console.error(error.message);
-        res.status(500).send("Internal server error");
-    }
-})
-
-//ROUTE 3: update Menu (admin)
-router.put('/updatemenu/:id', fetchuser, async (req, res) => {
-    const { name, description, price, category, image } = req.body;
-    try {
-        if (req.user.role !== 'admin') {
-            return res.status(403).send("Access denied");
-        }
         const newMenu = {};
-        if (name) { newMenu.name = name; }
-        if (description) { newMenu.description = description; }
-        if (price) { newMenu.price = price; }
-        if (category) { newMenu.category = category; }
-        if (image) { newMenu.image = image; }
+        if (name) newMenu.name = name;
+        if (description) newMenu.description = description;
+        if (price) newMenu.price = price;
+        if (category) newMenu.category = category;
+        if (image) newMenu.image = image;
 
         let menu = await Menu.findById(req.params.id);
-        if (!menu) { return res.status(404).send("Not Found"); }
+        if (!menu) {
+            return res.status(404).send("Menu item not found");
+        }
 
-        // if (menu.user.toString() !== req.user.id) {
-        //     return res.status(401).send("Not Allowed");
-        // }
+        menu = await Menu.findByIdAndUpdate(
+            req.params.id,
+            { $set: newMenu },
+            { new: true }
+        );
 
-        menu = await Menu.findByIdAndUpdate(req.params.id, { $set: newMenu }, { new: true })
-        res.json({ menu });
+        res.json(menu);
+
     } catch (error) {
         console.error(error.message);
         res.status(500).send("Internal server error");
     }
-})
+});
 
-//ROUTE 4: delete Menu (admin)
-router.delete('/deletemenu/:id', fetchuser, async (req, res) => {
+// ROUTE 4: Delete Menu (ADMIN)
+router.delete('/:id', fetchuser, async (req, res) => {
     try {
         if (req.user.role !== 'admin') {
-            return res.status(403).send("Access denied");
+            return res.status(403).json({ error: "Admin access required" });
         }
+
         let menu = await Menu.findById(req.params.id);
-        if (!menu) { return res.status(404).send("Not Found"); }
+        if (!menu) {
+            return res.status(404).send("Menu item not found");
+        }
 
-        // if (menu.user.toString() !== req.user.id) {
-        //     return res.status(401).send("Not Allowed");
-        // }
+        await Menu.findByIdAndDelete(req.params.id);
 
-        menu = await Menu.findByIdAndDelete(req.params.id)
-        res.json({ "Success": "Menu has been deleted", menu: menu });
+        res.json({ success: true, message: "Menu item deleted" });
+
     } catch (error) {
         console.error(error.message);
         res.status(500).send("Internal server error");
     }
-})
+});
 
-module.exports = router
+module.exports = router;
