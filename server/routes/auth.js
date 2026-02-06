@@ -5,6 +5,7 @@ const { body, validationResult } = require('express-validator');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const fetchuser = require('../middleware/fetchuser');
+const isAdmin = require("../middleware/isAdmin");
 
 const JWT_SECRET = 'heythere';
 
@@ -43,7 +44,7 @@ router.post(
             });
 
             const data = {
-                user: { id: user.id }
+                user: { id: user.id, role: user.role }
             };
 
             const authtoken = jwt.sign(data, JWT_SECRET);
@@ -58,12 +59,10 @@ router.post(
 );
 
 // ROUTE 2: Login
-router.post(
-    '/login',
-    [
-        body('email', 'Enter a valid email').isEmail(),
-        body('password', 'Password cannot be blank').exists()
-    ],
+router.post('/login', [
+    body('email', 'Enter a valid email').isEmail(),
+    body('password', 'Password cannot be blank').exists()
+],
     async (req, res) => {
         let success = false;
 
@@ -90,7 +89,7 @@ router.post(
             }
 
             const data = {
-                user: { id: user.id }
+                user: { id: user.id, role: user.role }
             };
 
             const authtoken = jwt.sign(data, JWT_SECRET);
@@ -108,6 +107,7 @@ router.post(
 router.post('/getuser', fetchuser, async (req, res) => {
     try {
         const userId = req.user.id;
+        localStorage.setItem("role", user.role);
         const user = await User.findById(userId).select('-password');
         res.json(user);
     } catch (error) {
@@ -115,5 +115,17 @@ router.post('/getuser', fetchuser, async (req, res) => {
         res.status(500).send("Internal server error");
     }
 });
+
+//ROUTE 4: Get all user details
+router.get('/getallusers', fetchuser, isAdmin, async (req, res) => {
+    try {
+        const users = await User.find().select('-password');
+        res.json(users);
+    } catch (error) {
+        console.error(error);
+        res.status(500).send("Internal server error");
+    }
+});
+
 
 module.exports = router;

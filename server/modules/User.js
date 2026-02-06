@@ -21,8 +21,12 @@ const UserSchema = new Schema({
         default: 'user',
         required: true
     },
+    date: {
+        type: Date,
+        default: Date.now
+    },
 });
 
-const User = mongoose.model('user', UserSchema);
+const User = mongoose.model('User', UserSchema);
 User.createIndexes();
 module.exports = User;

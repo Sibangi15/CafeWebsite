@@ -1,23 +1,22 @@
-const jwt = require('jsonwebtoken');
+const jwt = require("jsonwebtoken");
+const JWT_SECRET = "heythere";
 
-const JWT_SECRET = 'heythere';
-
-function fetchuser(req, res, next) {
-    // Get token from header
-    const token = req.header('auth-token');
+const fetchuser = (req, res, next) => {
+    const token = req.header("auth-token");
 
     if (!token) {
-        return res.status(401).json({ error: "No token provided" });
+        return res.status(401).send("Access denied. No token provided.");
     }
 
     try {
         const data = jwt.verify(token, JWT_SECRET);
-        req.user = data.user;   // { id: ... }
-        next();                
+        req.user = data.user; // { id }
+        next();
     } catch (error) {
-        return res.status(401).json({ error: "Invalid token" });
+        return res.status(401).send("Invalid token");
     }
-}
+};
 
 module.exports = fetchuser;
+
 

@@ -11,6 +11,13 @@ import { useState } from 'react';
 import LandingPage from './pages/LandingPage';
 import Menu from './pages/Menu';
 import Cart from './pages/Cart';
+import AdminRoute from "./routes/AdminRoute";
+import Dashboard from "./pages/admin/Dashboard";
+import AdminLayout from './layouts/AdminLayout';
+import ManageMenu from './pages/admin/ManageMenu';
+import Orders from './pages/admin/Orders';
+import UserDetails from './pages/admin/UserDetails';
+
 
 function App() {
   const [alert, setAlert] = useState(null);
@@ -33,6 +40,19 @@ function App() {
           <Route path="/register" element={<Register showAlert={showAlert} />} />
           <Route path="/menu" element={<Menu />} />
           <Route path="/orders" element={<Cart />} />
+          <Route
+            path="/admin"
+            element={
+              <AdminRoute>
+                <AdminLayout />
+              </AdminRoute>
+            }
+          >
+            <Route path="dashboard" element={<Dashboard />} />
+            <Route path="allmenu" element={<ManageMenu />} />
+            <Route path="allorders" element={<Orders />} />
+            <Route path="allusers" element={<UserDetails />} />
+            </Route>
         </Routes>
       </Router>
     </div>
