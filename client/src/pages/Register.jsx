@@ -21,9 +21,9 @@ const Register = (props) => {
             const json = response.data;
 
             if (response.status === 200 && json.success) {
-                localStorage.setItem('token', json.authtoken);
+                sessionStorage.setItem('token', json.authtoken);
                 props.showAlert("Account created successfully", "success");
-                navigate("/menu");
+                navigate("/login");
             } else {
                 props.showAlert(json.error || "Unable to create account", "danger");
             }

@@ -18,7 +18,7 @@ export default function SideNav() {
     return (
         <aside className="pt-26 fixed left-0 top-0 h-screen w-64 bg-linear-to-b from-amber-900 via-amber-800 to-amber-900 text-slate-100">
             <div className="px-6 py-6 border-b border-white/10 text-xl font-semibold">
-                Cafe Panel
+                Admin Panel
             </div>
 
             <nav className="mt-6 flex flex-col gap-1 px-4">

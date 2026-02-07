@@ -9,3 +9,25 @@ html {
   scroll-behavior: smooth;
 }
 
+.nav-link {
+  position: relative;
+  padding: 0.25rem 0;
+}
+
+.nav-link::before {
+  content: "";
+  position: absolute;
+  bottom: -4px;
+  left: 50%;
+  width: 0;
+  height: 2px;
+  background-color: black;
+  transition: all 0.35s ease;
+  transform: translateX(-50%);
+}
+
+.nav-link:hover::before {
+  width: 175%;
+  max-width: calc(100% + 2rem);
+  left: 50%;
+}

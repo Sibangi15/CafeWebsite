@@ -17,6 +17,7 @@ import AdminLayout from './layouts/AdminLayout';
 import ManageMenu from './pages/admin/ManageMenu';
 import Orders from './pages/admin/Orders';
 import UserDetails from './pages/admin/UserDetails';
+import Alert from "./components/Alert";
 
 
 function App() {
@@ -34,6 +35,7 @@ function App() {
     <div>
       <Router>
         <Navbar />
+        <Alert alert={alert} />
         <Routes>
           <Route path="/" element={<LandingPage />} />
           <Route path="/login" element={<Login showAlert={showAlert} />} />
@@ -52,7 +54,7 @@ function App() {
             <Route path="allmenu" element={<ManageMenu />} />
             <Route path="allorders" element={<Orders />} />
             <Route path="allusers" element={<UserDetails />} />
-            </Route>
+          </Route>
         </Routes>
       </Router>
     </div>

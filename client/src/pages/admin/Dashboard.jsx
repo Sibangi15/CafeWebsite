@@ -21,7 +21,7 @@ const AdminDashboard = () => {
         fetchStats();
     }, []);
     return (
-        <div className="min-h-screen bg-linear-to-br from-gray-100 to-gray-200 p-6 pt-30">
+        <div className="min-h-screen bg-linear-to-br from-gray-100 to-gray-200 p-6 pt-24">
 
             <div className="mb-10">
                 <h1 className="text-4xl font-extrabold text-gray-800">

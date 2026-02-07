@@ -1,105 +1,104 @@
-import React from 'react';
-import '../styles/global.css';
-import { Link, useNavigate } from "react-router-dom";
-import { jwtDecode } from "jwt-decode";
+import React from "react";
+import { Link, useNavigate, useLocation } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 
 const Navbar = () => {
     const navigate = useNavigate();
-    const token = localStorage.getItem("token");
+    const location = useLocation();
+    const { user, logout } = useAuth();
 
-    let isAdmin = false;
-    let isLoggedIn = false;
-
-    if (token) {
-        try {
-            const decoded = jwtDecode(token);
-            isLoggedIn = true;
-            isAdmin = decoded.role === "admin";
-        } catch (err) {
-            console.error("Invalid token");
-            localStorage.removeItem("token");
-        }
-    }
-
-    const handleLogout = () => {
-        localStorage.removeItem("token");
-        navigate("/login");
-    };
+    const isLoggedIn = !!user;
+    const isAdmin = user?.role === "admin";
+    const isMenuPage = location.pathname === "/menu";
 
     return (
-        <nav className="fixed top-0 left-0 z-50 w-full flex items-center px-10 py-4 bg-white/80 backdrop-blur-md shadow-sm">
-            <div className="flex-1">
+        <nav className="fixed top-0 left-0 z-50 w-full grid grid-cols-3 items-center px-10 py-4 bg-white/80 backdrop-blur-md shadow-sm">
+
+            {/* LEFT */}
+            <div className="flex items-center gap-3 justify-start">
                 <img src="/owllogo.jpeg" alt="Logo" className="h-14" />
+                <h1 className="group font-serif text-2xl font-semibold tracking-wide text-stone-900">
+                    The <span className="italic text-amber-800">Owl’s</span> Hut
+                </h1>
             </div>
 
-            <ul className="flex gap-10 text-lg font-medium text-black">
-                <li><Link to="/" className="nav-link">Home</Link></li>
-
-                <li>
-                    <button onClick={() =>
-                        document.getElementById("about")?.scrollIntoView({ behavior: "smooth" })
-                    }>
-                        About
+            {/* CENTER */}
+            <ul className="flex justify-center items-center gap-10 text-lg font-medium">
+                <li className="nav-link">
+                    <button
+                        onClick={() => {
+                            navigate("/");
+                            setTimeout(() => {
+                                document
+                                    .getElementById("home")
+                                    ?.scrollIntoView({ behavior: "smooth" });
+                            }, 0);
+                        }}
+                    >
+                        Home
                     </button>
                 </li>
 
-                <li>
-                    <button onClick={() =>
-                        document.getElementById("gallery")?.scrollIntoView({ behavior: "smooth" })
-                    }>
-                        Gallery
-                    </button>
-                </li>
+                {["about", "gallery", "contact"].map((id) => (
+                    <li key={id} className="nav-link">
+                        <button
+                            onClick={() =>
+                                document
+                                    .getElementById(id)
+                                    ?.scrollIntoView({ behavior: "smooth" })
+                            }
+                        >
+                            {id.charAt(0).toUpperCase() + id.slice(1)}
+                        </button>
+                    </li>
+                ))}
 
-                <li>
-                    <button onClick={() =>
-                        document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" })
-                    }>
-                        Contact
-                    </button>
-                </li>
-
-                {isAdmin && (
-                    <li>
-                        <Link to="/admin/dashboard" className="text-red-700 font-semibold">
-                            Admin
-                        </Link>
+                {isLoggedIn && isAdmin && (
+                    <li className="nav-link text-amber-800">
+                        <Link to="/admin/dashboard">Admin</Link>
                     </li>
                 )}
             </ul>
 
-            <div className="flex-1 flex justify-end gap-4">
+            {/* RIGHT */}
+            <div className="flex items-center justify-end gap-4 whitespace-nowrap">
                 {isLoggedIn && (
+                    <span className="text-sm italic text-stone-700">
+                        Welcome, <span className="ml-1 font-semibold text-amber-800">{user.name}</span>
+                    </span>
+                )}
+
+                {isLoggedIn && !isAdmin && (
                     <Link
-                        to="/orders"
-                        className="bg-black/80 text-white px-6 py-2 rounded-full hover:bg-black transition"
+                        to={isMenuPage ? "/orders" : "/menu"}
+                        className="bg-black/80 text-white px-6 py-2 rounded-full"
                     >
-                        Your Cart
+                        {isMenuPage ? "Your Cart" : "Menu"}
                     </Link>
                 )}
 
-                {isLoggedIn && (
-                    <button
-                        onClick={handleLogout}
-                        className="bg-black/80 text-white px-6 py-2 rounded-full hover:bg-black transition"
-                    >
+                {isLoggedIn ? (
+                    < button className="bg-black/80 text-white px-6 py-2 rounded-full"
+                        onClick={() => {
+                            logout();
+                            navigate("/", { replace: true });
+                        }}>
                         Logout
                     </button>
-                )}
-
-                {!isLoggedIn && (
+                ) : (
                     <Link
                         to="/login"
-                        className="bg-black/80 text-white px-6 py-2 rounded-full hover:bg-black transition"
+                        className="bg-black/80 text-white px-6 py-2 rounded-full"
                     >
                         Order Now
                     </Link>
                 )}
             </div>
-        </nav>
+        </nav >
     );
 };
 
 export default Navbar;
+
 
 

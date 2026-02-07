@@ -2,11 +2,12 @@ import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import api from '../api/axios'
 import { jwtDecode } from "jwt-decode";
-
+import { useAuth } from "../context/AuthContext";
 
 const Login = (props) => {
     const [credentials, setCredentials] = useState({ email: "", password: "" })
     const navigate = useNavigate();
+    const { login } = useAuth();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -19,17 +20,18 @@ const Login = (props) => {
             const json = response.data;
 
             if (response.status === 200 && json.success) {
-                localStorage.setItem("token", json.authtoken);
-                props.showAlert("Logged in successfully", "success");
                 const decoded = jwtDecode(json.authtoken);
+                login(json.authtoken);
 
                 if (decoded.user.role === "admin") {
                     navigate("/admin/dashboard");
                 } else {
-                    navigate("/menu");
+                    props.showAlert("Logged in successfully", "success");
+                    setTimeout(() => navigate("/menu"), 300);
                 }
 
             } else {
+                console.log("showAlert:", props.showAlert);
                 props.showAlert(json.error || "Invalid credentials", "danger");
             }
         } catch (error) {

@@ -1,6 +1,21 @@
 import React from 'react'
+import { Link } from "react-router-dom";
+import { jwtDecode } from "jwt-decode";
 
 function Gallery() {
+    const token = sessionStorage.getItem("token");
+    let isLoggedIn = false;
+
+    if (token) {
+        try {
+            const decoded = jwtDecode(token);
+            isLoggedIn = true;
+        } catch (err) {
+            console.error("Invalid token");
+            sessionStorage.removeItem("token");
+        }
+    }
+
     return (
         <div>
             <section id="gallery" className="w-full py-20 bg-white">
@@ -39,14 +54,15 @@ function Gallery() {
                     </div>
 
                     <div className="mt-14 text-center">
-                        <a
-                            href="/login"
+                        <Link
+                            to={isLoggedIn ? "/menu" : "/login"}
                             className="inline-block px-10 py-4 text-lg font-semibold text-white rounded-full
-                   bg-black/90 hover:bg-black transition-all duration-300"
+               bg-black/90 hover:bg-black transition-all duration-300"
                         >
                             Order Now
-                        </a>
+                        </Link>
                     </div>
+
 
                 </div>
             </section>
