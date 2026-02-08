@@ -2,7 +2,7 @@ const Home = () => {
     return (
         <div>
             <section id="home">
-                <div className=" relative min-h-screen w-full bg-[url('/1.jpg')] bg-cover bg-center bg-no-repeat flex items-center justify-center">
+                <div className=" relative min-h-screen w-full bg-[url('/bg.jpg')] bg-cover bg-center bg-no-repeat flex items-center justify-center">
                     <div className="absolute inset-0 bg-black/50"></div>
 
                     <div className="relative z-10 w-full md:w-10/12 lg:w-8/12 px-4 md:px-12 py-6 text-center text-white">
@@ -10,7 +10,7 @@ const Home = () => {
                             The Owl’s Hut
                         </h1>
                         <p className="text-lg md:text-xl mb-6">
-                            Indulge in the Sweet Symphony of Our Irresistible Pastries and Cakes
+                            A cozy hideaway where great coffee, warm bites, and quiet moments come together.
                         </p>
                         <button className="px-6 py-3 border border-white rounded-full hover:bg-white hover:text-black transition cursor"
                             onClick={() => {

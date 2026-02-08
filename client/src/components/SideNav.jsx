@@ -13,7 +13,6 @@ const navItems = [
     { name: "Users", path: "/admin/allusers", icon: UserIcon },
 ];
 
-
 export default function SideNav() {
     return (
         <aside className="pt-26 fixed left-0 top-0 h-screen w-64 bg-linear-to-b from-amber-900 via-amber-800 to-amber-900 text-slate-100">

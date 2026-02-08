@@ -9,25 +9,30 @@ export const AuthProvider = ({ children }) => {
 
     useEffect(() => {
         const token = sessionStorage.getItem("token");
+
         if (token) {
             try {
                 const decoded = jwtDecode(token);
-                setUser(decoded.user || decoded);
-                
-                setUser(json.user);
-                sessionStorage.setItem("user", JSON.stringify(json.user));
+                const userData = decoded.user || decoded;
 
-            } catch {
+                setUser(userData);
+            } catch (error) {
+                console.error("Invalid token", error);
                 sessionStorage.removeItem("token");
+                setUser(null);
             }
         }
+
         setLoading(false);
     }, []);
 
     const login = (token) => {
         sessionStorage.setItem("token", token);
+
         const decoded = jwtDecode(token);
-        setUser(decoded.user || decoded);
+        const userData = decoded.user || decoded;
+
+        setUser(userData);
     };
 
     const logout = () => {

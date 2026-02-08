@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import api from "../../api/axios";
 
 const AdminDashboard = () => {
@@ -24,12 +25,8 @@ const AdminDashboard = () => {
         <div className="min-h-screen bg-linear-to-br from-gray-100 to-gray-200 p-6 pt-24">
 
             <div className="mb-10">
-                <h1 className="text-4xl font-extrabold text-gray-800">
-                    Admin Dashboard
-                </h1>
-                <p className="text-gray-600 mt-2">
-                    Manage your restaurant operations
-                </p>
+                <h1 className="text-4xl font-extrabold text-gray-800">Admin Dashboard</h1>
+                <p className="text-gray-600 mt-2">Manage your cafe operations</p>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
@@ -39,7 +36,6 @@ const AdminDashboard = () => {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-
                 <DashboardCard
                     title="Orders"
                     desc="View & update order status"
@@ -68,19 +64,18 @@ const StatCard = ({ title, value }) => {
     return (
         <div className="bg-white p-6 rounded-2xl shadow hover:shadow-lg transition">
             <p className="text-gray-500 text-sm">{title}</p>
-            <h2 className="text-4xl font-bold mt-2 text-amber-900">
-                {value}
-            </h2>
+            <h2 className="text-4xl font-bold mt-2 text-amber-900">{value}</h2>
         </div>
     );
 };
 
 const DashboardCard = ({ title, desc, action, onClick, to }) => {
+    const navigate = useNavigate();
     const handleClick = () => {
         if (onClick) {
-            onClick(); // use custom function if provided
+            onClick(); 
         } else if (to) {
-            window.location.href = to; // navigate to a route
+            navigate(to); 
         }
     };
 
@@ -90,16 +85,11 @@ const DashboardCard = ({ title, desc, action, onClick, to }) => {
                 <h2 className="text-xl font-semibold text-gray-800">{title}</h2>
                 <p className="text-gray-600 mt-2">{desc}</p>
             </div>
-            <button
-                onClick={handleClick}
-                className="mt-6 bg-amber-900 hover:bg-amber-800 text-white py-2 rounded-lg transition"
-            >
+            <button onClick={handleClick} className="mt-6 bg-amber-900 hover:bg-amber-800 text-white py-2 rounded-lg transition">
                 {action}
             </button>
         </div>
     );
 };
 
-
 export default AdminDashboard;
-

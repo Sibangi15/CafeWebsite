@@ -1,4 +1,4 @@
-import './App.css';
+import './index.css';
 import {
   BrowserRouter as Router,
   Routes,
@@ -18,7 +18,6 @@ import ManageMenu from './pages/admin/ManageMenu';
 import Orders from './pages/admin/Orders';
 import UserDetails from './pages/admin/UserDetails';
 import Alert from "./components/Alert";
-
 
 function App() {
   const [alert, setAlert] = useState(null);
@@ -42,13 +41,11 @@ function App() {
           <Route path="/register" element={<Register showAlert={showAlert} />} />
           <Route path="/menu" element={<Menu />} />
           <Route path="/orders" element={<Cart />} />
-          <Route
-            path="/admin"
-            element={
-              <AdminRoute>
-                <AdminLayout />
-              </AdminRoute>
-            }
+          <Route path="/admin" element={
+            <AdminRoute>
+              <AdminLayout />
+            </AdminRoute>
+          }
           >
             <Route path="dashboard" element={<Dashboard />} />
             <Route path="allmenu" element={<ManageMenu />} />
@@ -62,11 +59,3 @@ function App() {
 }
 
 export default App;
-
-
-
-
-
-
-
-

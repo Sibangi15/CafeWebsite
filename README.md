@@ -1,16 +1,109 @@
-# React + Vite
+#  The Owl’s Hut — Full Stack Cafe Application
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+The Owl’s Hut is a full-stack cafe and coffee shop web application built using the **MERN stack**.  
+It provides a seamless experience for users to browse the menu and place orders, while offering a powerful **admin dashboard** to manage menu items, users, and orders.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+##  Project Overview
 
-## React Compiler
+The Owl’s Hut is designed to simulate a real-world restaurant management system.  
+The application is divided into two main parts:
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- **Customer-facing interface** for browsing menu items
+- **Admin panel** for managing restaurant operations
 
-## Expanding the ESLint configuration
+The project focuses on:
+- Clean UI/UX
+- Secure authentication
+- Scalable backend architecture
+- Real-world MERN stack practices
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+---
+
+##  Features
+
+###  User Features
+- User authentication (Login / Signup)
+- Browse menu items with images
+- View item details (price, category, description)
+- Place orders
+- Responsive design for mobile & desktop
+
+###  Admin Features
+- Secure admin login
+- Admin dashboard with statistics
+- Add, edit, and delete menu items
+- View all registered users
+- View and manage orders
+- Protected admin routes
+
+---
+
+##  Tech Stack
+
+### Frontend
+- **React**
+- **Vite**
+- **Tailwind CSS**
+- **React Router DOM**
+- **Axios**
+
+### Backend
+- **Node.js**
+- **Express.js**
+- **JWT Authentication**
+
+### Database
+- **MongoDB**
+- **Mongoose**
+
+---
+
+##  Screenshots
+
+> ![Home](screenshots/image.png)
+>![Login](screenshots/image-1.png)
+>![Menu](screenshots/image-2.png)
+>![Admin Dashboard](screenshots/image-3.png)
+
+---
+
+##  Live Application
+
+
+
+---
+
+##  API Routes
+
+### Authentication
+
+| Method | Route                  | Description         |
+| ------ | ---------------------- | ------------------- |
+| POST   | `/api/auth/createuser` | Register a new user |
+| POST   | `/api/auth/login`      | Login user / admin  |
+
+### Users (Admin)
+
+| Method | Route                    | Description   |
+| ------ | ------------------------ | ------------- |
+| GET    | `/api/admin/getallusers` | Get all users |
+
+### Menu
+
+| Method | Route           | Description               |
+| ------ | --------------- | ------------------------- |
+| GET    | `/api/menu`     | Get all menu items        |
+| POST   | `/api/menu`     | Add new menu item (Admin) |
+| PUT    | `/api/menu/:id` | Update menu item (Admin)  |
+| DELETE | `/api/menu/:id` | Delete menu item (Admin)  |
+
+### Orders
+
+| Method | Route                         | Description            |
+| ------ | ----------------------------- | ---------------------- |
+| GET    | `/api/order/fetchorders`      | Get all orders (Admin) |
+| PUT    | `/api/order/updatestatus/:id` | Update order status    |
+
+---

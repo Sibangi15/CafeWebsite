@@ -12,13 +12,13 @@ const About = () => {
                     <div className="text-left">
                         <h1 className="text-4xl md:text-5xl font-bold mb-6">Our Story</h1>
                         <p className="text-gray-700 mb-4 text-lg">
-                            At The Owl’s Hut, we are passionate about creating delectable pastries and cakes that ignite your taste buds and leave you craving for more. Our secret ingredient? Love, of course!
+                            At The Owl’s Hut, we’re all about creating a warm, cozy space where good coffee, comforting food, and unhurried moments come together. Every cup is brewed with care, every dish prepared with heart, and every detail designed to make you feel at home.
                         </p>
                         <p className="text-gray-700 mb-4 text-lg">
-                            From the flakiest croissants to the creamiest éclairs, our master bakers craft each treat with precision and care, ensuring that every bite is a delightful experience.
+                            From freshly brewed coffees and handcrafted beverages to wholesome bites and indulgent treats, our menu is made to comfort, delight, and keep you coming back for more.
                         </p>
                         <p className="text-gray-700 text-lg">
-                            Join us on a journey of sweetness and satisfaction, where every bite is a celebration of flavor and joy.
+                            Step into The Owl’s Hut and slow down for a while — a place where conversations linger, flavors shine, and every visit feels like your favorite little escape.
                         </p>
                     </div>
                 </div>
