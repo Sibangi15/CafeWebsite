@@ -18,7 +18,7 @@ const Register = (props) => {
             return;
         }
         try {
-            const response = await api.post('/auth/createuser', { name, email, password });
+            const response = await api.post('/api/auth/createuser', { name, email, password });
             const json = response.data;
 
             if (response.status === 200 && json.success) {
