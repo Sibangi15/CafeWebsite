@@ -7,9 +7,11 @@ connectToMongo();
 const port = process.env.PORT || 5000;
 
 app.use(cors({
-  origin: ["https://cafewebsite-frontend.onrender.com"],
-  credentials: true
+  origin: "https://cafewebsite-frontend.onrender.com",
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "auth-token"]
 }));
+
 app.use(express.json())
 
 app.use('/api/auth', require('./routes/auth'))
