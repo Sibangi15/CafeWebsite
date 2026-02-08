@@ -13,7 +13,7 @@ const Cart = () => {
 
     const placeOrder = async () => {
         try {
-            await api.post("/order/addorder", {
+            await api.post("/api/order/addorder", {
                 items: cartItems.map((i) => ({
                     menuItem: i._id,
                     quantity: i.quantity

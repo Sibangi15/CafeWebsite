@@ -10,7 +10,7 @@ const Menu = () => {
 
     useEffect(() => {
         const fetchMenu = async () => {
-            const res = await api.get("/menu");
+            const res = await api.get("/api/menu");
             setMenu(res.data);
             setLoading(false);
         };

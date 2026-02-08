@@ -7,7 +7,7 @@ const Orders = () => {
     // Fetch orders
     const fetchOrders = async () => {
         try {
-            const res = await api.get("/order/fetchorders");
+            const res = await api.get("/api/order/fetchorders");
             setOrders(res.data);
         } catch (err) {
             console.error("Error fetching orders:", err);
@@ -22,7 +22,7 @@ const Orders = () => {
     const updateOrderStatus = async (id, newStatus) => {
         try {
             const response = await api.put(
-                `/order/updatestatus/${id}`,
+                `/api/order/updatestatus/${id}`,
                 { status: newStatus }
             );
 

@@ -16,7 +16,7 @@ const ManageMenu = () => {
 
     const fetchMenu = async () => {
         try {
-            const response = await api.get("/menu");
+            const response = await api.get("/api/menu");
             setMenuItems(response.data);
             setLoading(false);
         } catch (error) {
@@ -38,7 +38,7 @@ const ManageMenu = () => {
     const handleDelete = async (id) => {
         if (!window.confirm("Are you sure you want to delete this item?")) return;
         try {
-            await api.delete(`/menu/${id}`);
+            await api.delete(`/api/menu/${id}`);
             setMenuItems(menuItems.filter((item) => item._id !== id));
         } catch (error) {
             console.error("Delete failed", error);
@@ -50,11 +50,11 @@ const ManageMenu = () => {
         try {
             if (currentItem._id) {
                 // Edit existing
-                const res = await api.put(`/menu/${currentItem._id}`, currentItem);
+                const res = await api.put(`/api/menu/${currentItem._id}`, currentItem);
                 setMenuItems(menuItems.map(item => item._id === currentItem._id ? res.data : item));
             } else {
                 // Add new
-                const res = await api.post("/menu", currentItem);
+                const res = await api.post("/api/menu", currentItem);
                 setMenuItems([...menuItems, res.data]);
             }
             setIsEditing(false);

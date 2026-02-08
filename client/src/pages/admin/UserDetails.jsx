@@ -7,7 +7,7 @@ const UserDetails = () => {
     // Fetch orders from backend
     const fetchUsers = async () => {
         try {
-            const res = await api.get("/auth/getallusers");
+            const res = await api.get("/api/auth/getallusers");
             setUsers(res.data);
         } catch (err) {
             console.error(err);

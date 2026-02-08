@@ -12,7 +12,7 @@ const AdminDashboard = () => {
     useEffect(() => {
         const fetchStats = async () => {
             try {
-                const res = await api.get("/admin/stats");
+                const res = await api.get("/api/admin/stats");
                 setStats(res.data);
             } catch (error) {
                 console.error("Failed to load stats", error);
